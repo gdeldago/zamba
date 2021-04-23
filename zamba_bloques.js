@@ -2,6 +2,7 @@
 Blockly.Blocks.sensores = {COLOUR: '#2ca5e2'};
 Blockly.Blocks.primitivas = {COLOUR: '#4B6CD4'};
 Blockly.Blocks.texto = {COLOUR: '#5BA58C'};
+Blockly.Blocks.numero = 230;
 Blockly.Themes.Classic.blockStyles.loop_blocks.colourPrimary = "#ee7d16";
 Blockly.Themes.Classic.blockStyles.logic_blocks.colourPrimary = "#ee7d16";
 
@@ -44,13 +45,13 @@ Blockly.defineBlocksWithJsonArray([
         ],
         "previousStatement": null,
         "nextStatement": null,
-        "colour": Blockly.Blocks.texto.COLOUR,
+        "colour": Blockly.Blocks.primitivas.COLOUR,
         "tooltip": "Imprime el valor recibido",
         "helpUrl": ""
     },
     {
         "type": "obtener_entrada",
-        "message0": "Obtener entrada con mensaje: %1",
+        "message0": "Obtener entrada mostrando el mensaje: %1",
         "args0": [
             {
                 "type": "input_value",
@@ -61,6 +62,41 @@ Blockly.defineBlocksWithJsonArray([
         "output": null,
         "colour": Blockly.Blocks.texto.COLOUR,
         "tooltip": "Muestra un mensaje y obtiene un texto de entrada",
+        "helpUrl": ""
+    },
+    {
+        "type": "caracter_de_cadena",
+        "message0": "Caracter de la cadena: %1 en la posición: %2",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "CADENA"
+            },
+            {
+                "type": "input_value",
+                "name": "POSICION"
+            }
+
+        ],
+        "inputsInline": true,
+        "output": null,
+        "colour": Blockly.Blocks.texto.COLOUR,
+        "tooltip": "Retorna el caracter ubicado en la posición indicada",
+        "helpUrl": ""
+    },
+    {
+        "type": "longitud_cadena",
+        "message0": "Longitud de la cadena: %1",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXTO"
+            }
+        ],
+        "inputsInline": true,
+        "output": null, 
+        "colour": 230,
+        "tooltip": "Retorna la longitud de una cadena de caracteres",
         "helpUrl": ""
     },
     {
@@ -131,12 +167,48 @@ Blockly.JavaScript['obtener_entrada'] = function (block) {
 
 Blockly.Python['obtener_entrada'] = function (block) {
     let textoMensaje = Blockly.Python.valueToCode(block, 'TEXTO', Blockly.Python.ORDER_NONE);
-    let code = 'input(' + textoMensaje + ')\n';
+    let code = 'input(' + textoMensaje + ')';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 
+/**
+ * Funciones generadoras de código correspodientes al bloque "longitud_cadena"
+ * @param {!Blockly.Block} Bloque.
+ * @return {!List.<string, enum>} Código JavaScript o Python, Orden de precedencia
+ */
+Blockly.JavaScript['longitud_cadena'] = function (block) {
+    let cadena = Blockly.JavaScript.valueToCode(block, 'TEXTO', Blockly.JavaScript.ORDER_NONE);
+    let code = 'longitudCadena(' + cadena + ')';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
 
+
+Blockly.Python['longitud_cadena'] = function (block) {
+    let cadena = Blockly.Python.valueToCode(block, 'TEXTO', Blockly.Python.ORDER_NONE);
+    let code = 'len(' + cadena + ')';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+/**
+ * Funciones generadoras de código correspodientes al bloque "caracter_de_cadena"
+ * @param {!Blockly.Block} Bloque.
+ * @return {!List.<string, enum>} Código JavaScript o Python, Orden de precedencia
+ */
+Blockly.JavaScript['caracter_de_cadena'] = function (block) {
+    let cadena = Blockly.JavaScript.valueToCode(block, 'CADENA', Blockly.JavaScript.ORDER_NONE);
+    let posicion = Blockly.JavaScript.valueToCode(block, 'POSICION', Blockly.JavaScript.ORDER_NONE);
+    let code = 'caracterCadena(' + cadena + ', ' + posicion + ')';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
+Blockly.Python['caracter_de_cadena'] = function (block) {
+    let cadena = Blockly.JavaScript.valueToCode(block, 'CADENA', Blockly.JavaScript.ORDER_NONE);
+    let posicion = Blockly.JavaScript.valueToCode(block, 'POSICION', Blockly.JavaScript.ORDER_NONE);
+    let code = cadena + '['+ posicion+ ']';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
 /**
  * Funciones generadoras de código correspodientes al bloque "cambiar_color_texto"

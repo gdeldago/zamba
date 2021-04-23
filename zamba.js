@@ -10,6 +10,25 @@ delete Blockly.Blocks.math_change;
 
 var color_texto = "#000000";
 
+var blocklyArea = document.getElementById('blocklyArea');
+var blocklyDiv = document.getElementById('blocklyDiv');
+var onresize = function(e) {
+    // Compute the absolute coordinates and dimensions of blocklyArea.
+    var element = blocklyArea;
+    var x = 0;
+    var y = 0;
+    do {
+      x += element.offsetLeft;
+      y += element.offsetTop;
+      element = element.offsetParent;
+    } while (element);
+    // Position blocklyDiv over blocklyArea.
+    blocklyDiv.style.left = x + 'px';
+    blocklyDiv.style.top = y + 'px';
+    blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+    blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+    Blockly.svgResize(workspace);
+};
 
 var workspace = Blockly.inject('blocklyDiv',
     {
@@ -39,6 +58,10 @@ workspace.addChangeListener(Blockly.Events.disableOrphans);
 // Exit is used to signal the end of a script.
 Blockly.JavaScript.addReservedWords('exit');
 
+window.addEventListener('resize', onresize, false);
+onresize();
+Blockly.svgResize(workspace);
+
 function myUpdateFunction(event) {
     let code = Blockly.Python.workspaceToCode(workspace);
     
@@ -58,7 +81,6 @@ var runButton = document.getElementById('ejecutar');
 var stopButton = document.getElementById('detener');
 var latestCode = '';
 var runner;
-var instance = M.Tabs.init(el, options);
 
 function initApi(interpreter, globalObject) {
 
@@ -80,6 +102,20 @@ function initApi(interpreter, globalObject) {
     };
     interpreter.setProperty(globalObject, 'obtenerEntrada',
     interpreter.createNativeFunction(func_obtenerEntrada));
+
+    // Add an API function for the longitudCadena() block.
+    let func_longitudCadena = function (valor) {
+        return longitudCadena(valor);
+    };
+    interpreter.setProperty(globalObject, 'longitudCadena',
+    interpreter.createNativeFunction(func_longitudCadena));
+
+    // Add an API function for the caracterCadena() block.
+    let func_caracterCadena = function (cadena, posicion) {
+        return caracterCadena(cadena, posicion);
+    };
+    interpreter.setProperty(globalObject, 'caracterCadena',
+    interpreter.createNativeFunction(func_caracterCadena));
 
     // Add an API function for the cambiarColorTexto() block.
     let func_cambiarColorTexto = function (color) {
@@ -195,6 +231,21 @@ function obtenerEntrada(textoMensaje) {
 }
 
 /**
+ * @param cadena es una cadena de texto
+ */
+function longitudCadena(cadena) {
+    return (cadena != null) ? cadena.length : 0;
+}
+
+/**
+ * @param cadena es una cadena de texto
+ * @param posicion es un entero
+ */
+function caracterCadena(cadena, posicion) {
+    return (cadena != null) ? cadena.charAt(posicion)  : '';
+}
+
+/**
  * @param color es una cadena de la forma #RRGGBB 
  */
 function cambiarColorTexto(color) {
@@ -280,7 +331,7 @@ function cargarPrograma(contenido) {
         Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(solucion), workspace);
     } catch (e) {
         console.error(e);
-        alert("Lo siento, este archivo no tiene una solución de UNIPE Blockly.");
+        alert("Lo siento, este archivo no tiene una solución ZAMBA.");
     }
 
     let errors = [];
@@ -339,3 +390,5 @@ function conmutarTab(evt, nombreTab) {
     evt.currentTarget.className += " active";
     return;
 }
+
+
