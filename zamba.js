@@ -219,7 +219,7 @@ function initVariables() {
 */
 function imprimir(valor) {
     let texto = (valor != null) ? valor.toString() : '';
-    outputArea.innerHTML = outputArea.innerHTML + "<span style='color:" + color_texto + "'>" + texto + "</span>";
+    outputArea.innerHTML = outputArea.innerHTML + "<span style='color:" + color_texto + "'>" + texto + "</span>" + "<br>";
     return;
 }
 
