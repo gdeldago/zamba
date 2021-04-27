@@ -62,6 +62,8 @@ window.addEventListener('resize', onresize, false);
 onresize();
 Blockly.svgResize(workspace);
 
+agregarBloqueInicial(workspace);
+
 function myUpdateFunction(event) {
     let code = Blockly.Python.workspaceToCode(workspace);
     
@@ -281,9 +283,7 @@ function generarBloquesFuncionProcedimiento(workspace, tipoRutina) {
     let procedureDefs = workspace.getBlocksByType('procedures_def' + tipoRutina, true);
     for (let procIdx in procedureDefs) {
         let blockText = '<block type="procedures_call' + tipoRutina + '">' +
-
-            '<field name="NAME">' + procedureDefs[procIdx].getFieldValue('NAME') + '</field>';
-
+                        '<field name="NAME">' + procedureDefs[procIdx].getFieldValue('NAME') + '</field>';
 
         if (procedureDefs[procIdx].arguments_.length > 0) {
             blockText += '<mutation>';
@@ -318,8 +318,6 @@ function leerSolucionWeb(e) {
 }
 
 function cargarPrograma(contenido) {
-    // let regex_file = /\.spbq$/
-    // let regex_version = /^\d+$/
     let data = null;
     let solucion = null;
 
@@ -391,4 +389,19 @@ function conmutarTab(evt, nombreTab) {
     return;
 }
 
+function nuevoPrograma() {
+    let workspace = Blockly.getMainWorkspace();
+    if (confirm("¿Comenzar un programa nuevo?")){    
+        workspace.clear();
+        agregarBloqueInicial(workspace);
+    }
+    return;
+}
 
+function agregarBloqueInicial(workspace) {
+    var xml = '<xml>' +
+              '<block type="inicio" deletable="false" movable="false"></block>' +
+              '</xml>';
+    Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
+    return;
+}

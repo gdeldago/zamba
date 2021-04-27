@@ -18,6 +18,7 @@
     <script src="blockly/python_compressed.js"></script>
     <script src="blockly/javascript_compressed.js"></script>
     <script src="blockly/msg/js/es.js"></script>
+    <script src="blockly/Blockly-to-SVG.js"></script>
     <script src="zamba_bloques.js"></script>
 </head>
 
@@ -38,8 +39,13 @@
     <div class="row">
       
       <div id="bloques" class="tabcontent" style="display:block">
-
         <div class="row justify-content-start">
+            <div class="col s2">
+                <button class="btn waves-effect" onclick="nuevoPrograma()">
+                    <i class="material-icons left">restart_alt</i>
+                    nuevo
+                </button>
+            </div>
             <div class="col s2">
                 <label for="file-upload" id="open" type="file" class="btn waves-effect">
                     <i class="material-icons left">folder_open</i>
@@ -63,7 +69,13 @@
                     <i class="material-icons left">cancel</i>detener
                 </button>
             </div>
-
+            <!--            
+            <div class="col s2">
+                <button id="detener" class="btn waves-effect waves-light" onclick="exportPNG()">
+                    <i class="material-icons left">screenshot</i>Capturar imagen
+                </button>
+            </div>
+            -->
         </div>
 
           <div class="row" style="display: flex; flex-wrap: wrap; min-height: 80vh">
@@ -101,7 +113,7 @@
 </div>
 
 
-<!--Opciones de ToolBox a mostrar en esta actividad-->
+<!-- Opciones del ToolBox -->
 <xml id="toolbox" style="display: none">
     <category name="Primitivas">
         <block type="imprimir">
@@ -194,14 +206,6 @@
 
 <!--Genera el toolbox basado en el XML anterior-->
 <script src="zamba.js"></script>
-<script>
-//var workspace = Blockly.inject('blocklyDiv', options);
-var xml =
-  '<xml>' +
-    '<block type="inicio" deletable="false" movable="false"></block>' +
-  '</xml>';
-Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
-</script>
 
 </body>
 
