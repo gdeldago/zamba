@@ -204,9 +204,9 @@ Blockly.JavaScript['caracter_de_cadena'] = function (block) {
 
 
 Blockly.Python['caracter_de_cadena'] = function (block) {
-    let cadena = Blockly.JavaScript.valueToCode(block, 'CADENA', Blockly.JavaScript.ORDER_NONE);
-    let posicion = Blockly.JavaScript.valueToCode(block, 'POSICION', Blockly.JavaScript.ORDER_NONE);
-    let code = cadena + '['+ posicion+ ']';
+    let cadena = Blockly.Python.valueToCode(block, 'CADENA', Blockly.Python.ORDER_NONE);
+    let posicion = Blockly.Python.valueToCode(block, 'POSICION', Blockly.Python.ORDER_NONE);
+    let code = cadena + '['+ posicion + ']';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
