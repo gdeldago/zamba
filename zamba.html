@@ -126,13 +126,18 @@
                 <field name="NUM"></field>
             </value>
         </block>
+        <block type="obtener_entrada_numerica">  
+            <value name="TEXTO">
+                <field name="NUM"></field>
+            </value>
+        </block>
         <block type="longitud_cadena">  
             <value name="TEXTO">
                 <field name="NUM"></field>
             </value>
         </block>
         <block type="caracter_de_cadena">  
-            <value name="TEXTO">
+            <value name="CADENA">
                 <field name="NUM"></field>
             </value>
         </block>
@@ -156,7 +161,7 @@
     </category>
     <category name="Operadores aritméticos">
     <block type="math_arithmetic">    
-      <field name="OP">Suma</field>
+      <field name="OP">ADD</field>
       <value name="A">
         <field type="math_number">
           <field name="NUM"></field>
@@ -186,7 +191,7 @@
     <category name="Valores">
         <block type="text"></block>
         <block type="math_number">
-            <field name="VALOR">0</field>
+            <field name="NUM">0</field>
         </block>
         <block type="text_join"></block>
     </category>

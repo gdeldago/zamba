@@ -85,6 +85,21 @@ Blockly.defineBlocksWithJsonArray([
         "helpUrl": ""
     },
     {
+        "type": "obtener_entrada_numerica",
+        "message0": "Obtener entrada numérica mostrando el mensaje: %1",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "TEXTO"
+            }
+        ],
+        "inputsInline": true,
+        "output": null,
+        "colour": 230,
+        "tooltip": "Muestra un mensaje y obtiene un valor numérico de entrada",
+        "helpUrl": ""
+    },
+    {
         "type": "longitud_cadena",
         "message0": "Longitud de la cadena: %1",
         "args0": [
@@ -160,7 +175,7 @@ Blockly.Python['imprimir'] = function (block) {
  */
 Blockly.JavaScript['obtener_entrada'] = function (block) {
     let textoMensaje = Blockly.JavaScript.valueToCode(block, 'TEXTO', Blockly.JavaScript.ORDER_NONE);
-    let code = 'obtenerEntrada(' + textoMensaje + ')\n';
+    let code = 'obtenerEntrada(' + textoMensaje + ')';
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -171,6 +186,23 @@ Blockly.Python['obtener_entrada'] = function (block) {
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
+/**
+ * Funciones generadoras de código correspodientes al bloque "obtener_entrada_num"
+ * @param {!Blockly.Block} Bloque.
+ * @return {!List.<string, enum>} Código JavaScript o Python, Orden de precedencia
+ */
+Blockly.JavaScript['obtener_entrada_numerica'] = function (block) {
+    let textoMensaje = Blockly.JavaScript.valueToCode(block, 'TEXTO', Blockly.JavaScript.ORDER_NONE);
+    let code = 'parseInt(obtenerEntrada(' + textoMensaje + '))';
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
+Blockly.Python['obtener_entrada_numerica'] = function (block) {
+    let textoMensaje = Blockly.Python.valueToCode(block, 'TEXTO', Blockly.Python.ORDER_NONE);
+    let code = 'int(input(' + textoMensaje + '))';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
 /**
  * Funciones generadoras de código correspodientes al bloque "longitud_cadena"

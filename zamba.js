@@ -105,6 +105,13 @@ function initApi(interpreter, globalObject) {
     interpreter.setProperty(globalObject, 'obtenerEntrada',
     interpreter.createNativeFunction(func_obtenerEntrada));
 
+    // Add an API function for the obtenerEntrada() block.
+    let func_obtenerEntradaNumerica = function (valor) {
+        return obtenerEntradaNumerica(valor);
+    };
+    interpreter.setProperty(globalObject, 'obtenerEntradaNumerica',
+    interpreter.createNativeFunction(func_obtenerEntradaNumerica));
+
     // Add an API function for the longitudCadena() block.
     let func_longitudCadena = function (valor) {
         return longitudCadena(valor);
