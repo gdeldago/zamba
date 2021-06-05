@@ -83,7 +83,7 @@ var runButton = document.getElementById('ejecutar');
 var stopButton = document.getElementById('detener');
 var latestCode = '';
 var runner;
-
+var modoEjecucion = document.getElementById('modoEjecucion');
 function initApi(interpreter, globalObject) {
 
     Blockly.DOMParser = window.DOMParser;
@@ -187,7 +187,10 @@ function ejecutar() {
         runButton.disabled = 'disabled';
         stopButton.disabled = '';
         myInterpreter = new Interpreter(latestCode, initApi);
-        runStepByStep();
+        if (!modoEjecucion.checked)
+            runStepByStep();
+        else
+            runFullSpeed();
     }
     return;
 }
@@ -203,7 +206,7 @@ function detener() {
 function runStepByStep() {
     if (myInterpreter) {
         if (myInterpreter.step()) {
-            setTimeout(runStepByStep, 10);
+            setTimeout(runStepByStep, 5);
         }
         else {
             resetInterpreter();
@@ -213,6 +216,19 @@ function runStepByStep() {
     return;
 }
 
+function runFullSpeed() {
+    if (myInterpreter) {
+        let hayMasCodigo = myInterpreter.run();
+        if (hayMasCodigo) {
+            setTimeout(runFullSpeed, 10);
+        } 
+        else {
+            resetInterpreter();
+            resetStepUi(false);
+        }
+    }
+    return;
+}
 
 // Load the interpreter now, and upon future changes.
 generateCodeAndLoadIntoInterpreter();
